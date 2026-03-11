@@ -34,7 +34,7 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
     <form onSubmit={handleSubmit} className="space-y-5">
       {/* Size Input */}
       <div className="space-y-2">
-        <label htmlFor="size" className="block text-sm font-medium text-slate-200">
+        <label htmlFor="size" className="block text-sm font-medium text-gray-200">
           Property Size <span className="text-red-400">*</span>
         </label>
         <div className="flex gap-2">
@@ -46,7 +46,7 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
               required
               value={formData.size}
               onChange={handleChange}
-              className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+              className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300"
               placeholder="e.g. 2000"
               data-testid="input-size"
             />
@@ -55,7 +55,7 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
             name="sizeUnit"
             value={formData.sizeUnit}
             onChange={handleChange}
-            className="appearance-none bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 cursor-pointer"
+            className="appearance-none bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300 cursor-pointer"
             data-testid="select-size-unit"
           >
             <option value="sqft">sq. ft</option>
@@ -66,7 +66,7 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
 
       {/* Number of Rooms */}
       <div className="space-y-2">
-        <label htmlFor="rooms" className="block text-sm font-medium text-slate-200">
+        <label htmlFor="rooms" className="block text-sm font-medium text-gray-200">
           Number of Rooms <span className="text-red-400">*</span>
         </label>
         <input
@@ -76,7 +76,7 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
           required
           value={formData.rooms}
           onChange={handleChange}
-          className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+          className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300"
           placeholder="e.g. 4"
           data-testid="input-rooms"
         />
@@ -84,7 +84,7 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
 
       {/* Budget */}
       <div className="space-y-2">
-        <label htmlFor="budget" className="block text-sm font-medium text-slate-200">
+        <label htmlFor="budget" className="block text-sm font-medium text-gray-200">
           Budget <span className="text-red-400">*</span>
         </label>
         <div className="relative">
@@ -95,17 +95,17 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
             required
             value={formData.budget}
             onChange={handleChange}
-            className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+            className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300"
             placeholder="e.g. 50000"
             data-testid="input-budget"
           />
-          <span className="absolute right-4 top-3 text-slate-400 text-sm">PKR</span>
+          <span className="absolute right-4 top-3 text-gray-400 text-sm">PKR</span>
         </div>
       </div>
 
       {/* Design Style */}
       <div className="space-y-2">
-        <label htmlFor="style" className="block text-sm font-medium text-slate-200">
+        <label htmlFor="style" className="block text-sm font-medium text-gray-200">
           Design Style
         </label>
         <div className="relative">
@@ -114,14 +114,14 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
             name="style"
             value={formData.style}
             onChange={handleChange}
-            className="w-full appearance-none bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 pr-10"
+            className="w-full appearance-none bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300 pr-10"
             data-testid="select-style"
           >
             <option value="Modern">Modern</option>
             <option value="Classic">Classic</option>
             <option value="Minimalistic">Minimalistic</option>
           </select>
-          <ChevronDown className="absolute right-3 top-3 w-5 h-5 text-slate-400 pointer-events-none" />
+          <ChevronDown className="absolute right-3 top-3 w-5 h-5 text-gray-400 pointer-events-none" />
         </div>
       </div>
 
@@ -129,7 +129,7 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:shadow-blue-500/30 transform hover:scale-[1.02] active:scale-[0.98]"
+        className="w-full mt-6 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:shadow-gray-600/30 transform hover:scale-[1.02] active:scale-[0.98]"
         data-testid="button-generate"
       >
         {isLoading ? (

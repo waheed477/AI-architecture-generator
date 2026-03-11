@@ -28,25 +28,25 @@ export default function Design() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-black">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gray-600/5 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gray-700/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10">
         {/* Header */}
-        <div className="border-b border-slate-700/50 backdrop-blur-md bg-slate-900/50">
+        <div className="border-b border-gray-700/50 backdrop-blur-md bg-black/50">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <Link href="/">
-              <button className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors" data-testid="button-back">
+              <button className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors" data-testid="button-back">
                 <ArrowLeft className="w-5 h-5" />
                 <span>Back</span>
               </button>
             </Link>
             <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-blue-400" />
+              <Sparkles className="w-5 h-5 text-gray-300" />
               <span className="font-semibold text-white">Design Studio</span>
             </div>
           </div>
@@ -66,9 +66,9 @@ export default function Design() {
               {/* Left Column: Form */}
               <div className="lg:col-span-1 space-y-6">
                 {/* Form Card */}
-                <div className="bg-slate-800/40 border border-slate-700 rounded-xl p-6 backdrop-blur-sm shadow-xl sticky top-6">
+                <div className="bg-gray-800/30 border border-gray-700/60 rounded-xl p-6 backdrop-blur-sm shadow-xl sticky top-6">
                   <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
                     Design Preferences
                   </h2>
                   <DesignForm onSubmit={handleGenerate} isLoading={isLoading} />
@@ -81,9 +81,9 @@ export default function Design() {
 
                 {/* Export Options */}
                 {layoutData && (
-                  <div className="bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 rounded-xl p-6 backdrop-blur-sm shadow-xl">
+                  <div className="bg-gray-800/30 border border-gray-700/60 rounded-xl p-6 backdrop-blur-sm shadow-xl">
                     <h3 className="font-semibold text-white mb-4 flex items-center gap-2">
-                      <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                      <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
                       Export Options
                     </h3>
                     <ExportButtons layoutData={layoutData} />
@@ -94,19 +94,19 @@ export default function Design() {
               {/* Right Column: 2D & 3D Preview */}
               <div className="lg:col-span-3 space-y-6">
                 {/* 2D Floor Plan */}
-                <div className="bg-slate-800/40 border border-slate-700 rounded-xl overflow-hidden shadow-2xl backdrop-blur-sm">
-                  <div className="px-6 py-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
+                <div className="bg-gray-800/30 border border-gray-700/60 rounded-xl overflow-hidden shadow-2xl backdrop-blur-sm">
+                  <div className="px-6 py-4 border-b border-gray-700/50 bg-black/50 flex justify-between items-center">
                     <h3 className="font-semibold text-white flex items-center gap-2">
-                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
                       2D Floor Plan
                     </h3>
                   </div>
-                  <div className="p-4 bg-gradient-to-br from-slate-900 to-slate-800 h-[400px] flex items-center justify-center">
+                  <div className="p-4 bg-gradient-to-br from-gray-900 to-black h-[400px] flex items-center justify-center">
                     {layoutData ? (
                       <FloorPlan2D layoutData={layoutData} />
                     ) : (
-                      <div className="text-slate-500 flex flex-col items-center space-y-3">
-                        <div className="w-12 h-12 rounded-lg bg-slate-700/30 flex items-center justify-center">
+                      <div className="text-gray-500 flex flex-col items-center space-y-3">
+                        <div className="w-12 h-12 rounded-lg bg-gray-700/30 flex items-center justify-center">
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                           </svg>
@@ -118,31 +118,31 @@ export default function Design() {
                 </div>
 
                 {/* 3D Model */}
-                <div className="bg-slate-800/40 border border-slate-700 rounded-xl overflow-hidden shadow-2xl backdrop-blur-sm">
-                  <div className="px-6 py-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
+                <div className="bg-gray-800/30 border border-gray-700/60 rounded-xl overflow-hidden shadow-2xl backdrop-blur-sm">
+                  <div className="px-6 py-4 border-b border-gray-700/50 bg-black/50 flex justify-between items-center">
                     <h3 className="font-semibold text-white flex items-center gap-2">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
                       3D Preview
                     </h3>
-                    <div className="text-xs font-medium text-blue-400 bg-blue-500/20 px-3 py-1 rounded-full border border-blue-500/50">
+                    <div className="text-xs font-medium text-gray-300 bg-gray-700/30 px-3 py-1 rounded-full border border-gray-600/50">
                       Interactive - Use mouse to rotate
                     </div>
                   </div>
                   <div 
-                    className="relative bg-gradient-to-br from-slate-900 to-slate-800 h-[400px]" 
+                    className="relative bg-gradient-to-br from-gray-900 to-black h-[400px]" 
                     data-testid="container-3d-preview"
                   >
                     {layoutData ? (
                       <ThreeDModel layoutData={layoutData} />
                     ) : (
-                      <div className="absolute inset-0 flex items-center justify-center text-slate-500 flex-col space-y-4">
-                        <div className="w-16 h-16 rounded-xl bg-slate-700/30 flex items-center justify-center">
+                      <div className="absolute inset-0 flex items-center justify-center text-gray-500 flex-col space-y-4">
+                        <div className="w-16 h-16 rounded-xl bg-gray-700/30 flex items-center justify-center">
                           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                           </svg>
                         </div>
                         <p className="text-center max-w-xs">
-                          <span className="block font-medium text-slate-400">Fill out the form and generate</span>
+                          <span className="block font-medium text-gray-400">Fill out the form and generate</span>
                           <span className="text-sm">your custom 3D layout</span>
                         </p>
                       </div>
@@ -150,10 +150,10 @@ export default function Design() {
 
                     {/* Loading Overlay */}
                     {isLoading && (
-                      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-10">
+                      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-10">
                         <div className="flex flex-col items-center">
-                          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                          <p className="mt-4 text-blue-300 font-medium">Generating Layout...</p>
+                          <div className="w-12 h-12 border-4 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+                          <p className="mt-4 text-gray-300 font-medium">Generating Layout...</p>
                         </div>
                       </div>
                     )}
