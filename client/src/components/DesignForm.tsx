@@ -9,6 +9,7 @@ interface DesignFormProps {
 export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
   const [formData, setFormData] = useState({
     size: "",
+    sizeUnit: "sqft",
     rooms: "",
     budget: "",
     style: "Modern"
@@ -36,19 +37,30 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
         <label htmlFor="size" className="block text-sm font-medium text-slate-200">
           Property Size <span className="text-red-400">*</span>
         </label>
-        <div className="relative">
-          <input
-            type="number"
-            id="size"
-            name="size"
-            required
-            value={formData.size}
+        <div className="flex gap-2">
+          <div className="flex-1 relative">
+            <input
+              type="number"
+              id="size"
+              name="size"
+              required
+              value={formData.size}
+              onChange={handleChange}
+              className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+              placeholder="e.g. 2000"
+              data-testid="input-size"
+            />
+          </div>
+          <select
+            name="sizeUnit"
+            value={formData.sizeUnit}
             onChange={handleChange}
-            className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-            placeholder="e.g. 2000"
-            data-testid="input-size"
-          />
-          <span className="absolute right-4 top-3 text-slate-400 text-sm">sq. ft</span>
+            className="appearance-none bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 cursor-pointer"
+            data-testid="select-size-unit"
+          >
+            <option value="sqft">sq. ft</option>
+            <option value="marla">marla</option>
+          </select>
         </div>
       </div>
 
@@ -87,7 +99,7 @@ export default function DesignForm({ onSubmit, isLoading }: DesignFormProps) {
             placeholder="e.g. 50000"
             data-testid="input-budget"
           />
-          <span className="absolute right-4 top-3 text-slate-400 text-sm">USD</span>
+          <span className="absolute right-4 top-3 text-slate-400 text-sm">PKR</span>
         </div>
       </div>
 
