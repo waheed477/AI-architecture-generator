@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import DesignForm from "@/components/DesignForm";
 import ThreeDModel from "@/components/ThreeDModel";
+import FloorPlan2D from "@/components/FloorPlan2D";
 import ExportButtons from "@/components/ExportButtons";
 import { generateLayout } from "@/utils/api";
 import { useLayoutStore } from "@/state/store";
@@ -61,11 +62,11 @@ export default function Design() {
             </div>
 
             {/* Grid Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
               {/* Left Column: Form */}
               <div className="lg:col-span-1 space-y-6">
                 {/* Form Card */}
-                <div className="bg-slate-800/40 border border-slate-700 rounded-xl p-6 backdrop-blur-sm shadow-xl">
+                <div className="bg-slate-800/40 border border-slate-700 rounded-xl p-6 backdrop-blur-sm shadow-xl sticky top-6">
                   <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
                     <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
                     Design Preferences
@@ -90,10 +91,34 @@ export default function Design() {
                 )}
               </div>
 
-              {/* Right Column: 3D Preview */}
-              <div className="lg:col-span-2">
-                <div className="bg-slate-800/40 border border-slate-700 rounded-xl overflow-hidden shadow-2xl h-[500px] lg:h-[600px] flex flex-col backdrop-blur-sm">
-                  {/* Header */}
+              {/* Right Column: 2D & 3D Preview */}
+              <div className="lg:col-span-3 space-y-6">
+                {/* 2D Floor Plan */}
+                <div className="bg-slate-800/40 border border-slate-700 rounded-xl overflow-hidden shadow-2xl backdrop-blur-sm">
+                  <div className="px-6 py-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
+                    <h3 className="font-semibold text-white flex items-center gap-2">
+                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                      2D Floor Plan
+                    </h3>
+                  </div>
+                  <div className="p-4 bg-gradient-to-br from-slate-900 to-slate-800 h-[400px] flex items-center justify-center">
+                    {layoutData ? (
+                      <FloorPlan2D layoutData={layoutData} />
+                    ) : (
+                      <div className="text-slate-500 flex flex-col items-center space-y-3">
+                        <div className="w-12 h-12 rounded-lg bg-slate-700/30 flex items-center justify-center">
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                          </svg>
+                        </div>
+                        <span className="text-sm">Generate to see floor plan</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* 3D Model */}
+                <div className="bg-slate-800/40 border border-slate-700 rounded-xl overflow-hidden shadow-2xl backdrop-blur-sm">
                   <div className="px-6 py-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
                     <h3 className="font-semibold text-white flex items-center gap-2">
                       <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
@@ -103,10 +128,8 @@ export default function Design() {
                       Interactive - Use mouse to rotate
                     </div>
                   </div>
-
-                  {/* Canvas Area */}
                   <div 
-                    className="flex-grow relative bg-gradient-to-br from-slate-900 to-slate-800" 
+                    className="relative bg-gradient-to-br from-slate-900 to-slate-800 h-[400px]" 
                     data-testid="container-3d-preview"
                   >
                     {layoutData ? (
