@@ -1,0 +1,84 @@
+FRONTEND DEVELOPMENT PROMPT - AI-Powered 3D Architecture Layout Generator
+
+## CRITICAL REQUIREMENTS CHECKLIST 📋
+Please ensure EVERY item below is implemented exactly as specified:
+
+### 1. INITIAL SETUP MUST-HAVES:
+- [ ] Use **Next.js template** (not plain React)
+- [ ] Install ALL 6 packages mentioned (three, @react-three/fiber, jspdf, tailwindcss, axios, zustand)
+- [ ] Configure TailwindCSS properly
+
+### 2. EXACT FOLDER STRUCTURE (CREATE THIS EXACTLY):
+/ai-architecture-generator
+├── /components # Reusable UI components (form, buttons, layout preview)
+│ ├── ThreeDModel.js # 3D rendering component
+│ ├── DesignForm.js # Form component (if extracted)
+│ └── ExportButtons.js # PDF/image export buttons
+├── /pages # Next.js pages
+│ ├── index.js # Landing page
+│ ├── design.js # Design input form page
+│ └── /api # API routes
+│ └── generate-layout.js # Backend API endpoint
+├── /public # Static files (images, fonts, etc.)
+├── /styles # Global and component-specific styles
+│ └── globals.css # Tailwind imports and global styles
+├── /utils # Utility functions
+│ ├── api.js # API call helpers
+│ └── exportHelpers.js # PDF/image export functions
+├── /3d # Folder for 3D layout components using Three.js
+│ └── sceneSetup.js # Three.js scene configuration
+├── /state # Global state management
+│ └── store.js # Zustand store
+├── package.json # Project dependencies
+└── next.config.js # Next.js configuration
+
+text
+
+### 3. PAGE IMPLEMENTATION (MUST MATCH):
+#### Landing Page (/) - /pages/index.js:
+- [ ] Full-screen hero section with gray background (bg-gray-100)
+- [ ] Heading: "AI-Powered 3D Architecture Layout Generator" (text-4xl, font-bold)
+- [ ] Subheading: "Generate your custom building layout based on your preferences." (text-lg)
+- [ ] Blue "Get Started" button (bg-blue-500) linking to /design
+
+#### Design Form Page (/design) - /pages/design.js:
+- [ ] ALL form fields EXACTLY as shown:
+  * Size (sq. ft or marlas) - number input, required
+  * Number of Rooms - number input, required
+  * Budget - number input, required
+  * Design Style - dropdown with options: Modern, Classic, Minimalistic
+- [ ] Form styling with borders, padding, rounded corners
+- [ ] Blue submit button with "Generate Design" text
+- [ ] Form submission connects to /api/generate-layout endpoint
+
+### 4. 3D RENDERING COMPONENT:
+- [ ] Create /components/ThreeDModel.js with EXACT code provided
+- [ ] Use React Three Fiber for 3D rendering
+- [ ] Each room renders as orange box mesh
+- [ ] Support zoom and rotate interactions
+
+```jsx
+// /components/ThreeDModel.js - USE THIS EXACT CODE
+import { Canvas } from "@react-three/fiber";
+import { useState, useEffect } from "react";
+
+export default function ThreeDModel({ layoutData }) {
+  const [model, setModel] = useState(null);
+
+  useEffect(() => {
+    if (layoutData) {
+      setModel(layoutData); // This would be the processed layout data
+    }
+  }, [layoutData]);
+
+  return (
+    <Canvas>
+      {model && model.map((room, index) => (
+        <mesh key={index} position={room.position}>
+          <boxBufferGeometry args={[room.width, room.height, room.depth]} />
+          <meshStandardMaterial color="orange" />
+        </mesh>
+      ))}
+    </Canvas>
+  );
+}'
