@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import DesignForm from "@/components/DesignForm";
 import ThreeDModel from "@/components/ThreeDModel";
 import ExportButtons from "@/components/ExportButtons";
 import { generateLayout } from "@/utils/api";
 import { useLayoutStore } from "@/state/store";
+import { ArrowLeft, Sparkles } from "lucide-react";
 
 export default function Design() {
   const { setLayoutData, layoutData } = useLayoutStore();
@@ -14,7 +16,6 @@ export default function Design() {
     setIsLoading(true);
     setError(null);
     try {
-      // Mock API call to /api/generate-layout
       const response = await generateLayout(formData);
       setLayoutData(response.data);
     } catch (err) {
@@ -26,53 +27,115 @@ export default function Design() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-12">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <div className="text-center md:text-left">
-          <h1 className="text-3xl font-bold text-gray-900">Design Your Layout</h1>
-          <p className="text-gray-600 mt-2">Enter your preferences to generate a 3D floor plan.</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="border-b border-slate-700/50 backdrop-blur-md bg-slate-900/50">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <Link href="/">
+              <button className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors" data-testid="button-back">
+                <ArrowLeft className="w-5 h-5" />
+                <span>Back</span>
+              </button>
+            </Link>
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-blue-400" />
+              <span className="font-semibold text-white">Design Studio</span>
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column: Form */}
-          <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-              <DesignForm onSubmit={handleGenerate} isLoading={isLoading} />
-              {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
+        {/* Main Content */}
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="space-y-8">
+            {/* Header */}
+            <div className="text-center md:text-left">
+              <h1 className="text-4xl font-bold text-white mb-2">Create Your Layout</h1>
+              <p className="text-slate-400">Define your space preferences and watch AI generate your perfect 3D floor plan</p>
             </div>
-            
-            {layoutData && (
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                <h3 className="font-semibold text-gray-900 mb-4">Export Options</h3>
-                <ExportButtons layoutData={layoutData} />
-              </div>
-            )}
-          </div>
 
-          {/* Right Column: 3D Preview */}
-          <div className="lg:col-span-2">
-            <div className="bg-white p-1 rounded-lg shadow-sm border border-gray-200 h-[500px] lg:h-[600px] flex flex-col">
-              <div className="px-4 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-md">
-                <h3 className="font-semibold text-gray-800">3D Preview</h3>
-                <div className="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">Interactive</div>
-              </div>
-              <div className="flex-grow relative bg-[#f8f9fa]" data-testid="container-3d-preview">
-                {layoutData ? (
-                  <ThreeDModel layoutData={layoutData} />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 flex-col space-y-3">
-                    <svg className="w-12 h-12 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    <p>Submit the form to generate a layout.</p>
+            {/* Grid Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Left Column: Form */}
+              <div className="lg:col-span-1 space-y-6">
+                {/* Form Card */}
+                <div className="bg-slate-800/40 border border-slate-700 rounded-xl p-6 backdrop-blur-sm shadow-xl">
+                  <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                    <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+                    Design Preferences
+                  </h2>
+                  <DesignForm onSubmit={handleGenerate} isLoading={isLoading} />
+                  {error && (
+                    <div className="mt-4 p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-300 text-sm">
+                      {error}
+                    </div>
+                  )}
+                </div>
+
+                {/* Export Options */}
+                {layoutData && (
+                  <div className="bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 rounded-xl p-6 backdrop-blur-sm shadow-xl">
+                    <h3 className="font-semibold text-white mb-4 flex items-center gap-2">
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                      Export Options
+                    </h3>
+                    <ExportButtons layoutData={layoutData} />
                   </div>
                 )}
-                {isLoading && (
-                  <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center z-10">
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                      <p className="mt-4 text-blue-600 font-medium">Generating Layout...</p>
+              </div>
+
+              {/* Right Column: 3D Preview */}
+              <div className="lg:col-span-2">
+                <div className="bg-slate-800/40 border border-slate-700 rounded-xl overflow-hidden shadow-2xl h-[500px] lg:h-[600px] flex flex-col backdrop-blur-sm">
+                  {/* Header */}
+                  <div className="px-6 py-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
+                    <h3 className="font-semibold text-white flex items-center gap-2">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                      3D Preview
+                    </h3>
+                    <div className="text-xs font-medium text-blue-400 bg-blue-500/20 px-3 py-1 rounded-full border border-blue-500/50">
+                      Interactive - Use mouse to rotate
                     </div>
                   </div>
-                )}
+
+                  {/* Canvas Area */}
+                  <div 
+                    className="flex-grow relative bg-gradient-to-br from-slate-900 to-slate-800" 
+                    data-testid="container-3d-preview"
+                  >
+                    {layoutData ? (
+                      <ThreeDModel layoutData={layoutData} />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-slate-500 flex-col space-y-4">
+                        <div className="w-16 h-16 rounded-xl bg-slate-700/30 flex items-center justify-center">
+                          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+                        </div>
+                        <p className="text-center max-w-xs">
+                          <span className="block font-medium text-slate-400">Fill out the form and generate</span>
+                          <span className="text-sm">your custom 3D layout</span>
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Loading Overlay */}
+                    {isLoading && (
+                      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-10">
+                        <div className="flex flex-col items-center">
+                          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                          <p className="mt-4 text-blue-300 font-medium">Generating Layout...</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
