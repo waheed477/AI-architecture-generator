@@ -1,10 +1,10 @@
 import { Link } from "wouter";
 import { Sparkles, Building2, Zap } from "lucide-react";
-import { useStore } from "@/state/store";
+import { useLayoutStore } from "@/state/store";
 import Footer from "@/components/Footer";
 
 export default function Home() {
-  const isDark = useStore((state) => state.isDark);
+  const isDark = useLayoutStore((state) => state.theme === 'dark');
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gradient-to-b from-gray-900 via-black to-black text-white' : 'bg-gradient-to-b from-slate-50 via-gray-100 to-white text-gray-900'} overflow-hidden relative transition-colors duration-300 flex flex-col`}>

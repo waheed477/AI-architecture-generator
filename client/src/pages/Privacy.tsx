@@ -1,10 +1,10 @@
 import { Link } from "wouter";
 import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
-import { useStore } from "@/state/store";
+import { useLayoutStore } from "@/state/store";
 
 export default function PrivacyPolicy() {
-  const isDark = useStore((state) => state.isDark);
+  const isDark = useLayoutStore((state) => state.theme === 'dark');
 
   return (
     <div className={`min-h-screen ${isDark ? "dark bg-gray-950" : "bg-gray-50"} transition-colors duration-300 flex flex-col`}>
