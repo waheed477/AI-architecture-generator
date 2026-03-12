@@ -1,12 +1,16 @@
 import { Link } from "wouter";
 import { Sparkles, Building2, Zap } from "lucide-react";
+import { useLayoutStore } from "@/state/store";
 
 export default function Home() {
+  const { theme } = useLayoutStore();
+  const isDark = theme === 'dark';
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-black text-white overflow-hidden relative">
+    <div className={`min-h-screen ${isDark ? 'bg-gradient-to-b from-gray-900 via-black to-black text-white' : 'bg-gradient-to-b from-slate-50 via-gray-100 to-white text-gray-900'} overflow-hidden relative transition-colors duration-300`}>
       {/* Background image with overlay */}
       <div 
-        className="absolute inset-0 opacity-30"
+        className={`absolute inset-0 ${isDark ? 'opacity-30' : 'opacity-10'}`}
         style={{
           backgroundImage: "url('/architecture-hero.png')",
           backgroundSize: "cover",
@@ -15,21 +19,21 @@ export default function Home() {
         }}
       ></div>
       
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80"></div>
+      {/* Dark/Light overlay */}
+      <div className={`absolute inset-0 ${isDark ? 'bg-gradient-to-b from-black/40 via-black/60 to-black/80' : 'bg-gradient-to-b from-white/40 via-white/60 to-white/80'}`}></div>
 
       {/* Animated gradient background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gray-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gray-600/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className={`absolute -top-40 -right-40 w-80 h-80 ${isDark ? 'bg-gray-500/10' : 'bg-blue-500/10'} rounded-full blur-3xl animate-pulse`}></div>
+        <div className={`absolute -bottom-40 -left-40 w-80 h-80 ${isDark ? 'bg-gray-600/10' : 'bg-indigo-600/10'} rounded-full blur-3xl animate-pulse`} style={{animationDelay: '1s'}}></div>
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-20 border-b border-gray-700/50 backdrop-blur-md bg-black/50">
+      <nav className={`relative z-20 border-b backdrop-blur-md ${isDark ? 'border-gray-700/50 bg-black/50' : 'border-gray-200/50 bg-white/50'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Building2 className="w-8 h-8 text-gray-300" />
-            <span className="text-xl font-bold bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text text-transparent">ArchAI</span>
+            <Building2 className={`w-8 h-8 ${isDark ? 'text-gray-300' : 'text-blue-600'}`} />
+            <span className={`text-xl font-bold bg-gradient-to-r bg-clip-text text-transparent ${isDark ? 'from-gray-300 to-gray-400' : 'from-blue-600 to-indigo-600'}`}>ArchAI</span>
           </div>
         </div>
       </nav>
@@ -38,22 +42,22 @@ export default function Home() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 flex flex-col items-center justify-center min-h-[calc(100vh-80px)]">
         <div className="text-center space-y-8 max-w-3xl">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-gray-800/40 border border-gray-700/60 px-4 py-2 rounded-full backdrop-blur-sm hover:border-gray-500/60 transition-colors">
-            <Sparkles className="w-4 h-4 text-gray-300" />
-            <span className="text-sm font-medium text-gray-300">AI-Powered Design Generation</span>
+          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm transition-colors border ${isDark ? 'bg-gray-800/40 border-gray-700/60 hover:border-gray-500/60' : 'bg-white/40 border-gray-200/60 hover:border-blue-500/40 shadow-sm'}`}>
+            <Sparkles className={`w-4 h-4 ${isDark ? 'text-gray-300' : 'text-blue-600'}`} />
+            <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>AI-Powered Design Generation</span>
           </div>
 
           {/* Main Heading */}
           <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-            <span className="bg-gradient-to-r from-gray-200 via-gray-300 to-white bg-clip-text text-transparent">
+            <span className={`bg-gradient-to-r bg-clip-text text-transparent ${isDark ? 'from-gray-200 via-gray-300 to-white' : 'from-gray-900 via-gray-800 to-gray-600'}`}>
               Create Stunning
             </span>
             <br />
-            <span className="text-white">3D Architecture Layouts</span>
+            <span className={isDark ? 'text-white' : 'text-gray-900'}>3D Architecture Layouts</span>
           </h1>
 
           {/* Subheading */}
-          <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
+          <p className={`text-xl leading-relaxed max-w-2xl mx-auto ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
             Transform your architectural vision into interactive 3D models in seconds. Define your space, customize your style, and export professional layouts.
           </p>
 
@@ -61,7 +65,7 @@ export default function Home() {
           <div className="pt-4">
             <Link href="/design">
               <button 
-                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-gray-600 to-gray-700 rounded-lg font-semibold text-lg text-white shadow-lg hover:shadow-xl hover:shadow-gray-600/30 transition-all duration-300 transform hover:scale-105"
+                className={`group relative inline-flex items-center gap-3 px-8 py-4 rounded-lg font-semibold text-lg text-white shadow-lg transition-all duration-300 transform hover:scale-105 ${isDark ? 'bg-gradient-to-r from-gray-600 to-gray-700 hover:shadow-gray-600/30' : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-blue-600/30'}`}
                 data-testid="button-get-started"
               >
                 <span>Start Designing</span>
@@ -72,28 +76,28 @@ export default function Home() {
 
           {/* Feature Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12">
-            <div className="bg-gray-800/30 border border-gray-700/60 rounded-xl p-6 backdrop-blur-sm hover:border-gray-500/60 hover:bg-gray-800/40 transition-all duration-300">
-              <div className="w-12 h-12 bg-gray-600/30 rounded-lg flex items-center justify-center mb-4">
-                <Building2 className="w-6 h-6 text-gray-300" />
+            <div className={`rounded-xl p-6 backdrop-blur-sm transition-all duration-300 border shadow-sm ${isDark ? 'bg-gray-800/30 border-gray-700/60 hover:border-gray-500/60 hover:bg-gray-800/40' : 'bg-white border-gray-200 hover:border-blue-500/40 hover:shadow-md'}`}>
+              <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${isDark ? 'bg-gray-600/30' : 'bg-blue-50'}`}>
+                <Building2 className={`w-6 h-6 ${isDark ? 'text-gray-300' : 'text-blue-600'}`} />
               </div>
-              <h3 className="font-semibold text-lg mb-2">Smart Layouts</h3>
-              <p className="text-gray-400">AI-generated floor plans tailored to your specifications</p>
+              <h3 className={`font-semibold text-lg mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>Smart Layouts</h3>
+              <p className={isDark ? 'text-gray-400' : 'text-gray-600'}>AI-generated floor plans tailored to your specifications</p>
             </div>
 
-            <div className="bg-gray-800/30 border border-gray-700/60 rounded-xl p-6 backdrop-blur-sm hover:border-gray-500/60 hover:bg-gray-800/40 transition-all duration-300">
-              <div className="w-12 h-12 bg-gray-600/30 rounded-lg flex items-center justify-center mb-4">
-                <Sparkles className="w-6 h-6 text-gray-300" />
+            <div className={`rounded-xl p-6 backdrop-blur-sm transition-all duration-300 border shadow-sm ${isDark ? 'bg-gray-800/30 border-gray-700/60 hover:border-gray-500/60 hover:bg-gray-800/40' : 'bg-white border-gray-200 hover:border-blue-500/40 hover:shadow-md'}`}>
+              <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${isDark ? 'bg-gray-600/30' : 'bg-blue-50'}`}>
+                <Sparkles className={`w-6 h-6 ${isDark ? 'text-gray-300' : 'text-blue-600'}`} />
               </div>
-              <h3 className="font-semibold text-lg mb-2">3D Visualization</h3>
-              <p className="text-gray-400">Interactive models you can rotate and explore</p>
+              <h3 className={`font-semibold text-lg mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>3D Visualization</h3>
+              <p className={isDark ? 'text-gray-400' : 'text-gray-600'}>Interactive models you can rotate and explore</p>
             </div>
 
-            <div className="bg-gray-800/30 border border-gray-700/60 rounded-xl p-6 backdrop-blur-sm hover:border-gray-500/60 hover:bg-gray-800/40 transition-all duration-300">
-              <div className="w-12 h-12 bg-gray-600/30 rounded-lg flex items-center justify-center mb-4">
-                <Zap className="w-6 h-6 text-gray-300" />
+            <div className={`rounded-xl p-6 backdrop-blur-sm transition-all duration-300 border shadow-sm ${isDark ? 'bg-gray-800/30 border-gray-700/60 hover:border-gray-500/60 hover:bg-gray-800/40' : 'bg-white border-gray-200 hover:border-blue-500/40 hover:shadow-md'}`}>
+              <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${isDark ? 'bg-gray-600/30' : 'bg-blue-50'}`}>
+                <Zap className={`w-6 h-6 ${isDark ? 'text-gray-300' : 'text-blue-600'}`} />
               </div>
-              <h3 className="font-semibold text-lg mb-2">Quick Export</h3>
-              <p className="text-gray-400">Download as PDF or high-res images instantly</p>
+              <h3 className={`font-semibold text-lg mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>Quick Export</h3>
+              <p className={isDark ? 'text-gray-400' : 'text-gray-600'}>Download as PDF or high-res images instantly</p>
             </div>
           </div>
         </div>
