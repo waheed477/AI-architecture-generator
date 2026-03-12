@@ -2,22 +2,14 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 
 export const exportToPDF = async (layoutData: any) => {
-  // Create new PDF document
-  const doc = new jsPDF({
-    orientation: "portrait",
-    unit: "mm",
-    format: "a4"
-  });
-
+  const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 20;
   const contentWidth = pageWidth - 2 * margin;
-
   let yPos = margin;
 
-  // Header & Title
-  doc.setFillColor(31, 41, 55); // Dark gray
+  doc.setFillColor(31, 41, 55);
   doc.rect(0, 0, pageWidth, 40, 'F');
   
   doc.setTextColor(255, 255, 255);
@@ -32,7 +24,6 @@ export const exportToPDF = async (layoutData: any) => {
   yPos = 50;
   doc.setTextColor(31, 41, 55);
 
-  // Summary Info
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Project Summary", margin, yPos);
@@ -50,7 +41,6 @@ export const exportToPDF = async (layoutData: any) => {
   doc.text(`Total Area: ${totalArea.toFixed(2)} sq units`, margin, yPos);
   yPos += 15;
 
-  // Room Details Table
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Room-by-Room Breakdown", margin, yPos);
@@ -60,8 +50,7 @@ export const exportToPDF = async (layoutData: any) => {
   const colWidths = [40, 90, 40];
   let headerX = margin;
 
-  // Draw table header
-  doc.setFillColor(243, 244, 246); // Light gray bg
+  doc.setFillColor(243, 244, 246);
   doc.rect(margin, yPos - 6, contentWidth, 10, 'F');
   
   doc.setFontSize(10);
@@ -72,28 +61,24 @@ export const exportToPDF = async (layoutData: any) => {
   });
   yPos += 10;
 
-  // Draw table rows
   doc.setFont("helvetica", "normal");
   layoutData?.forEach((room: any, index: number) => {
     const area = (room.width * room.depth).toFixed(2);
     const dimensions = `${room.width.toFixed(1)}m × ${room.depth.toFixed(1)}m × ${room.height.toFixed(1)}m`;
     
     let rowX = margin;
-    
-    // Alternating row background
     if (index % 2 === 1) {
       doc.setFillColor(249, 250, 251);
       doc.rect(margin, yPos - 6, contentWidth, 10, 'F');
     }
 
-    doc.text(`Room ${index + 1}`, rowX, yPos);
+    doc.text(room.name || `Room ${index + 1}`, rowX, yPos);
     rowX += colWidths[0];
     doc.text(dimensions, rowX, yPos);
     rowX += colWidths[1];
     doc.text(`${area} sq m`, rowX, yPos);
 
     yPos += 10;
-
     if (yPos > pageHeight - margin - 30) {
       doc.addPage();
       yPos = margin + 10;
@@ -103,13 +88,9 @@ export const exportToPDF = async (layoutData: any) => {
   yPos += 10;
 
   try {
-    // Capture 2D floor plan
-    const floorPlanElement = document.querySelector("[data-testid='canvas-floor-plan']")?.parentElement;
+    const floorPlanElement = document.querySelector(".touch-none")?.parentElement;
     if (floorPlanElement) {
-      if (yPos > pageHeight - margin - 100) {
-        doc.addPage();
-        yPos = margin + 10;
-      }
+      if (yPos > pageHeight - margin - 100) { doc.addPage(); yPos = margin + 10; }
 
       doc.setFontSize(14);
       doc.setFont("helvetica", "bold");
@@ -117,28 +98,21 @@ export const exportToPDF = async (layoutData: any) => {
       yPos += 10;
 
       const canvas2d = await html2canvas(floorPlanElement, { 
-        backgroundColor: '#111827', // Match dark theme roughly
-        scale: 2
+        backgroundColor: '#111827', scale: 2
       });
       const imgData = canvas2d.toDataURL("image/png");
-      
       const imgWidth = contentWidth;
       const imgHeight = (canvas2d.height / canvas2d.width) * imgWidth;
 
-      // Draw border
       doc.setDrawColor(200, 200, 200);
       doc.rect(margin, yPos, imgWidth, imgHeight);
       doc.addImage(imgData, "PNG", margin, yPos, imgWidth, imgHeight);
       yPos += imgHeight + 20;
     }
 
-    // Capture 3D model
-    const threeDCanvas = document.querySelector("canvas:not([data-testid='canvas-floor-plan'])") as HTMLCanvasElement;
+    const threeDCanvas = document.querySelector("canvas") as HTMLCanvasElement;
     if (threeDCanvas) {
-      if (yPos > pageHeight - margin - 100) {
-        doc.addPage();
-        yPos = margin + 10;
-      }
+      if (yPos > pageHeight - margin - 100) { doc.addPage(); yPos = margin + 10; }
 
       doc.setFontSize(14);
       doc.setFont("helvetica", "bold");
@@ -149,10 +123,7 @@ export const exportToPDF = async (layoutData: any) => {
       const imgWidth = contentWidth;
       const imgHeight = (threeDCanvas.height / threeDCanvas.width) * imgWidth;
 
-      if (yPos + imgHeight > pageHeight - margin - 10) {
-        doc.addPage();
-        yPos = margin + 10;
-      }
+      if (yPos + imgHeight > pageHeight - margin - 10) { doc.addPage(); yPos = margin + 10; }
 
       doc.setDrawColor(200, 200, 200);
       doc.rect(margin, yPos, imgWidth, imgHeight);
@@ -162,30 +133,20 @@ export const exportToPDF = async (layoutData: any) => {
     console.error("Error generating screenshots for PDF", error);
   }
 
-  // Footer on all pages
   const pageCount = doc.getNumberOfPages();
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i);
     doc.setFontSize(8);
     doc.setTextColor(150, 150, 150);
-    doc.text(
-      `Generated by Design Studio on ${new Date().toLocaleString()}`,
-      margin,
-      pageHeight - 10
-    );
-    doc.text(
-      `Page ${i} of ${pageCount}`,
-      pageWidth - margin - 20,
-      pageHeight - 10
-    );
+    doc.text(`Generated by Design Studio on ${new Date().toLocaleString()}`, margin, pageHeight - 10);
+    doc.text(`Page ${i} of ${pageCount}`, pageWidth - margin - 20, pageHeight - 10);
   }
 
-  // Save PDF
   doc.save("architecture-layout-report.pdf");
 };
 
 export const exportToImage = () => {
-  const canvas = document.querySelector("canvas:not([data-testid='canvas-floor-plan'])") as HTMLCanvasElement;
+  const canvas = document.querySelector("canvas") as HTMLCanvasElement;
   if (canvas) {
     const dataURL = canvas.toDataURL("image/png");
     const link = document.createElement("a");
@@ -195,4 +156,48 @@ export const exportToImage = () => {
   } else {
     alert("3D view not available for export");
   }
+};
+
+export const exportToJSON = (data: any) => {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.download = "layout-project.json";
+  link.href = url;
+  link.click();
+};
+
+export const exportToDXF = (floors: any[]) => {
+  let dxf = `0\nSECTION\n2\nENTITIES\n`;
+  
+  floors.forEach(floor => {
+    floor.rooms.forEach((room: any) => {
+      const w = room.width / 2;
+      const d = room.depth / 2;
+      const x = room.position[0];
+      const y = room.position[2]; // Z is Y in 2D
+      
+      const pts = [
+        [x - w, y - d],
+        [x + w, y - d],
+        [x + w, y + d],
+        [x - w, y + d]
+      ];
+
+      // Draw 4 lines for each room
+      for(let i=0; i<4; i++) {
+        const p1 = pts[i];
+        const p2 = pts[(i+1)%4];
+        dxf += `0\nLINE\n8\n${floor.name.replace(/\s+/g, '_')}\n10\n${p1[0]}\n20\n${p1[1]}\n30\n0.0\n11\n${p2[0]}\n21\n${p2[1]}\n31\n0.0\n`;
+      }
+    });
+  });
+  
+  dxf += `0\nENDSEC\n0\nEOF\n`;
+  const blob = new Blob([dxf], { type: "application/dxf" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.download = "layout-project.dxf";
+  link.href = url;
+  link.click();
 };
